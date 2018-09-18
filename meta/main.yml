@@ -1,0 +1,27 @@
+galaxy_info:
+  author: David Norman
+  description: Mount an EFS share on an AWS server.
+
+  issue_tracker_url: https://github.com/deekayen/ansible-role-aws-efs/issues
+
+  license: BSD
+
+  min_ansible_version: 2.3
+
+  platforms:
+  - name: Amazon
+    versions:
+    - all
+  - name: EL
+    versions:
+      - 7
+
+  galaxy_tags:
+    - AWS
+    - EFS
+
+dependencies:
+  - name: kisev.ius
+    src: git+https://github.com/kisev/ansible-role-ius.git
+    version: e4535edde8969ab253eb2ae0240a7931969feba9
+    when: ansible_os_family == "RedHat"

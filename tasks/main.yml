@@ -1,0 +1,60 @@
+---
+
+# Using encryption of data in transit with the Amazon EFS mount
+# helper requires OpenSSL version 1.0.2 or newer.
+# EL 7 comes with OpenSSL 1.0.2k-fips.
+- name: Install dependencies for Amazon EFS Utils.
+  package:
+    name: "{{ item }}"
+  with_items:
+    - gcc
+    - openssl-devel
+    - tcp_wrappers-devel
+
+# AWS EFS Utils requires a version of stunnel that
+# supports both OCSP and certificate hostname checking.
+# EL 7 comes with stunnel-4.56; OCSP was added in 4.16.
+# Stunnel 5.15 from 2015 adds the checkHost openssl 1.0.2 support
+# https://www.stunnel.org/sdf_ChangeLog.html
+- name: Install newer Stunnel for RedHat from iUS.
+  package:
+    name: stunnel5u
+  when: ansible_os_family == "RedHat"
+
+# This will fail if you don't already point at a repsitory which
+# contains an amazon-efs-utils RPM in config before this role.
+# It should succeed on Amazon linux.
+- name: Install Amazon EFS Utils.
+  package:
+    name: amazon-efs-utils
+
+- name: Install nfs-common (Debian)
+  package:
+    name: nfs-common
+    state: present
+  when: ansible_os_family == 'Debian'
+
+- name: Install nfs-utils (RedHat)
+  package:
+    name: nfs-utils
+    state: present
+  when: ansible_os_family == 'RedHat'
+
+# mkdir -p ${efs_directory}
+- name: Create directories for the mounts
+  file:
+    path: "{{ item.path | default('/mnt/efs') }}"
+    state: directory
+    mode: "{{ item.mode | default('0644') }}"
+    owner: "{{ item.owner | default('root') }}"
+    group: "{{ item.group | default('root') }}"
+  with_items: "{{ aws_efs_paths }}"
+
+# echo "${file_system_id_01}:/ ${efs_directory} efs tls,_netdev" >> /etc/fstab
+# mount -a -t efs defaults
+- name: Mount paths.
+  mount:
+    name: "{{ item.path }}"
+    src: "{{ item.filesystem_id }}:/ {{ item.path | default('/mnt/efs') }} efs {{ item.defaults | default('tls') }},_netdev 0 0"
+    state: mounted
+  with_items: "{{ aws_efs_paths }}"
