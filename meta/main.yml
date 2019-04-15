@@ -17,8 +17,8 @@ galaxy_info:
       - 7
 
   galaxy_tags:
-    - AWS
-    - EFS
+    - aws
+    - efs
 
 dependencies:
   - name: kisev.ius
