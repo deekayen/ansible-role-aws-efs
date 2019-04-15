@@ -13,12 +13,15 @@ addons:
     - python-pip
 
 install:
+  - pip install ansible-lint
   - pip install ansible-review
 
 before_script:
+  - ansible-lint --version
   - ansible-review --version
 
 script:
+  - git ls-files | grep -Ei '^[^[:punct:]].+.(yaml|yml)$' | xargs ansible-lint
   - git ls-files | grep -Ei '^[^[:punct:]].+.(yaml|yml)$' | xargs ansible-review -q
   #- ansible-playbook tests/test.yml -i tests/inventory --syntax-check
 
