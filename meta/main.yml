@@ -21,7 +21,7 @@ galaxy_info:
     - efs
 
 dependencies:
-  - name: kisev.ius
-    src: git+https://github.com/kisev/ansible-role-ius.git
+  - src: git+https://github.com/deekayen/ansible-role-ius.git
     version: e4535edde8969ab253eb2ae0240a7931969feba9
+    name: deekayen.ansible-role-ius
     when: ansible_os_family == "RedHat"
