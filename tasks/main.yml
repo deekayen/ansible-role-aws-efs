@@ -55,6 +55,6 @@
 - name: Mount paths.
   mount:
     name: "{{ item.path }}"
-    src: "{{ item.filesystem_id }}:/ {{ item.path | default('/mnt/efs') }} efs {{ item.defaults | default('tls') }},_netdev 0 0"
+    src: "{{ item.filesystem_id }}:/ {{ item.path | default('/mnt/efs') }} efs {{ item.defaults | default('tls') }},_netdev 0 0" # noqa 204
     state: mounted
   with_items: "{{ aws_efs_paths }}"
