@@ -1,5 +1,5 @@
 galaxy_info:
-  role_name: aws-efs
+  role_name: aws_efs
   author: David Norman
   description: Mount an EFS share on an AWS server.
 
