@@ -1,4 +1,5 @@
 galaxy_info:
+  role_name: aws-efs
   author: David Norman
   description: Mount an EFS share on an AWS server.
 
@@ -21,7 +22,5 @@ galaxy_info:
     - efs
 
 dependencies:
-  - src: git+https://github.com/deekayen/ansible-role-ius.git
-    version: e4535edde8969ab253eb2ae0240a7931969feba9
-    name: deekayen.ansible-role-ius
+  - src: deekayen.repo-ius
     when: ansible_os_family == "RedHat"
