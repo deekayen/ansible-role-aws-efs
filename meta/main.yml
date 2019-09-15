@@ -22,5 +22,5 @@ galaxy_info:
     - efs
 
 dependencies:
-  - src: deekayen.repo-ius
+  - src: deekayen.repo_ius
     when: ansible_os_family == "RedHat"
