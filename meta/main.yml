@@ -3,6 +3,7 @@ galaxy_info:
   author: David Norman
   description: Mount an EFS share on an AWS server.
 
+  github_branch: main
   issue_tracker_url: https://github.com/deekayen/ansible-role-aws-efs/issues
 
   license: BSD
@@ -10,12 +11,12 @@ galaxy_info:
   min_ansible_version: 2.3
 
   platforms:
-  - name: Amazon
-    versions:
-    - all
-  - name: EL
-    versions:
-      - 7
+    - name: Amazon
+      versions:
+        - all
+    - name: EL
+      versions:
+        - 7
 
   galaxy_tags:
     - aws
