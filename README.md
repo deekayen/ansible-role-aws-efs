@@ -1,7 +1,7 @@
+[![Build Status](https://travis-ci.org/deekayen/ansible-role-aws-efs.svg?branch=main)](https://travis-ci.org/deekayen/ansible-role-aws-efs) [![Project Status: Inactive – The project has reached a stable, usable state but is no longer being actively developed; support/maintenance will be provided as time allows.](https://www.repostatus.org/badges/latest/inactive.svg)](https://www.repostatus.org/#inactive)
+
 AWS EFS
 =======
-
-[![Build Status](https://travis-ci.org/deekayen/ansible-role-aws-efs.svg?branch=master)](https://travis-ci.org/deekayen/ansible-role-aws-efs) [![Project Status: Inactive – The project has reached a stable, usable state but is no longer being actively developed; support/maintenance will be provided as time allows.](https://www.repostatus.org/badges/latest/inactive.svg)](https://www.repostatus.org/#inactive)
 
 Mount an EFS share on an AWS server.
 
@@ -38,7 +38,10 @@ Example Playbook
 
 Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
-    - hosts: servers
+    ---
+
+    - name: Mount an Amazon Elastic File System.
+      hosts: servers
 
       vars:
         aws_efs_paths:
