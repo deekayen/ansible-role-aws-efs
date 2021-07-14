@@ -1,7 +1,6 @@
-[![Build Status](https://travis-ci.org/deekayen/ansible-role-aws-efs.svg?branch=main)](https://travis-ci.org/deekayen/ansible-role-aws-efs) [![Project Status: Inactive – The project has reached a stable, usable state but is no longer being actively developed; support/maintenance will be provided as time allows.](https://www.repostatus.org/badges/latest/inactive.svg)](https://www.repostatus.org/#inactive)
-
 AWS EFS
 =======
+[![CI](https://github.com/deekayen/ansible-role-aws-efs/actions/workflows/ci.yml/badge.svg)](https://github.com/deekayen/ansible-role-aws-efs/actions/workflows/ci.yml) [![Project Status: Inactive – The project has reached a stable, usable state but is no longer being actively developed; support/maintenance will be provided as time allows.](https://www.repostatus.org/badges/latest/inactive.svg)](https://www.repostatus.org/#inactive)
 
 Mount an EFS share on an AWS server.
 

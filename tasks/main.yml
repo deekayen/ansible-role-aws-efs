@@ -21,7 +21,7 @@
     name: stunnel5u
   when: ansible_os_family == "RedHat"
 
-# This will fail if you don't already point at a repsitory which
+# This will fail if you don't already point at a repository which
 # contains an amazon-efs-utils RPM in config before this role.
 # It should succeed on Amazon linux.
 - name: Install Amazon EFS Utils.
