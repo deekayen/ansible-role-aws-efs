@@ -1,0 +1,49 @@
+---
+argument_specs:
+  main:
+    short_description: Mount an EFS share on an AWS server.
+    description:
+      - Installs the Amazon EFS mount helper dependencies and NFS client
+        packages, creates the mount point directories, and mounts each
+        EFS filesystem with a persistent /etc/fstab entry.
+    author:
+      - David Norman
+    options:
+      aws_efs_paths:
+        type: list
+        elements: dict
+        required: true
+        description: >-
+          List of EFS filesystems to mount. Each entry must provide a
+          filesystem_id; every other key falls back to its default.
+        options:
+          filesystem_id:
+            type: str
+            required: true
+            description: EFS filesystem id to mount, for example fs-12345678.
+          path:
+            type: str
+            default: /mnt/efs
+            description: Absolute path of the mount point directory.
+          owner:
+            type: str
+            default: root
+            description: Owner of the mount point directory.
+          group:
+            type: str
+            default: root
+            description: Group of the mount point directory.
+          mode:
+            type: str
+            default: "0644"
+            description: Permissions of the mount point directory.
+          defaults:
+            type: str
+            default: tls
+            choices:
+              - tls
+              - default
+            description: >-
+              Leading mount option for the fstab entry. Use tls to encrypt
+              traffic in transit through stunnel, or default to mount
+              without encryption.

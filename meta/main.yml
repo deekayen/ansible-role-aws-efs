@@ -1,31 +1,32 @@
 ---
-
 galaxy_info:
-  role_name: aws_efs
   namespace: deekayen
+  role_name: aws_efs
   author: David Norman
   description: Mount an EFS share on an AWS server.
 
   github_branch: main
   issue_tracker_url: https://github.com/deekayen/ansible-role-aws-efs/issues
 
-  license: BSD
-
-  min_ansible_version: 2.3
+  license: BSD-3-Clause
+  min_ansible_version: "2.15"
 
   platforms:
     - name: Amazon
       versions:
-        - all
+        - "all"
     - name: EL
       versions:
-        - 7
-        - 8
+        - "8"
+        - "9"
 
   galaxy_tags:
     - aws
     - efs
+    - nfs
+    - filesystem
+    - mount
 
 dependencies:
-  - src: deekayen.repo_ius
+  - role: deekayen.repo_ius
     when: ansible_os_family == "RedHat"

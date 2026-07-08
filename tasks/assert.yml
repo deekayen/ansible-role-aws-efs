@@ -1,0 +1,19 @@
+---
+- name: Assert every EFS mount entry has a plausible filesystem id.
+  ansible.builtin.assert:
+    that:
+      - item.filesystem_id is defined
+      - item.filesystem_id is match('^fs-[0-9a-f]+$')
+    fail_msg: >-
+      Each aws_efs_paths entry needs a filesystem_id like fs-12345678,
+      got: {{ item.filesystem_id | default('undefined') }}
+    quiet: true
+  loop: "{{ aws_efs_paths }}"
+
+- name: Assert every EFS mount path is absolute.
+  ansible.builtin.assert:
+    that:
+      - (item.path | default('/mnt/efs')) is match('^/')
+    fail_msg: "aws_efs_paths entries need absolute paths, got: {{ item.path | default('') }}"
+    quiet: true
+  loop: "{{ aws_efs_paths }}"

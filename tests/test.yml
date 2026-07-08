@@ -1,0 +1,13 @@
+---
+- name: Test the aws_efs role.
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars:
+    aws_efs_paths:
+      - filesystem_id: fs-12345678
+        path: /mnt/efs
+
+  roles:
+    - deekayen.aws_efs

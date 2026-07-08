@@ -1,15 +1,10 @@
 ---
-
 name: CI
 'on':
   pull_request:
   push:
     branches:
       - main
-
-defaults:
-  run:
-    working-directory: 'deekayen.aws_efs'
 
 jobs:
 
@@ -18,17 +13,40 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out the codebase.
-        uses: actions/checkout@v2
-        with:
-          path: 'deekayen.aws_efs'
+        uses: actions/checkout@v4
 
       - name: Set up Python 3.
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: '3.12'
 
       - name: Install test dependencies.
-        run: pip3 install ansible ansible-lint
+        run: pip3 install ansible-lint
 
-      - name: Lint ansible.
-        run: ansible-lint
+      - name: Lint code.
+        run: ansible-lint --profile production
+
+  syntax:
+    name: Syntax check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the codebase.
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Ansible.
+        run: pip3 install ansible-core
+
+      - name: Install role and collection dependencies.
+        run: |
+          ansible-galaxy role install deekayen.repo_ius
+          ansible-galaxy collection install ansible.posix community.general
+          mkdir -p ~/.ansible/roles
+          ln -sfn "$PWD" ~/.ansible/roles/deekayen.aws_efs
+
+      - name: Syntax check the role.
+        run: ansible-playbook --syntax-check tests/test.yml -i tests/inventory

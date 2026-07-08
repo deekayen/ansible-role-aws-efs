@@ -53,7 +53,7 @@ Including an example of how to use your role (for instance, with variables passe
             filesystem_id: "fs-87654321"
 
       roles:
-         - deekayen.aws-efs
+         - deekayen.aws_efs
 
 License
 -------
