@@ -25,13 +25,13 @@
   ansible.builtin.package:
     name: nfs-common
     state: present
-  when: ansible_os_family == 'Debian'
+  when: ansible_facts.os_family == 'Debian'
 
 - name: Install nfs-utils (RedHat).
   ansible.builtin.package:
     name: nfs-utils
     state: present
-  when: ansible_os_family == 'RedHat'
+  when: ansible_facts.os_family == 'RedHat'
 
 # mkdir -p ${efs_directory}
 - name: Create directories for the mounts.
