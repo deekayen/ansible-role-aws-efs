@@ -1,0 +1,4 @@
+---
+# mounted mounts each share and writes /etc/fstab; present only writes
+# /etc/fstab, for images that should mount at first boot.
+aws_efs_mount_state: mounted

@@ -1,0 +1,14 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+
+  vars:
+    # Containers cannot reach a real EFS filesystem, so only write fstab.
+    aws_efs_mount_state: present
+    aws_efs_paths:
+      - filesystem_id: fs-12345678
+        path: /mnt/efs
+
+  roles:
+    - role: deekayen.aws_efs

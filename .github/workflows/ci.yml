@@ -21,14 +21,25 @@ jobs:
           python-version: '3.12'
 
       - name: Install test dependencies.
-        run: pip3 install ansible-lint
+        run: pip3 install ansible-lint flake8
+
+      - name: Install role dependencies.
+        run: ansible-galaxy install -r molecule/default/requirements.yml
 
       - name: Lint code.
         run: ansible-lint --profile production
 
-  syntax:
-    name: Syntax check
+      - name: Lint Python tests.
+        run: flake8 molecule/
+
+  molecule:
+    name: Molecule
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        distro:
+          - amazonlinux2023
+
     steps:
       - name: Check out the codebase.
         uses: actions/checkout@v4
@@ -38,15 +49,12 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Install Ansible.
-        run: pip3 install ansible-core
+      - name: Install test dependencies.
+        run: pip3 install ansible-core molecule molecule-plugins[docker] docker pytest-testinfra
 
-      - name: Install role and collection dependencies.
-        run: |
-          ansible-galaxy role install deekayen.repo_ius
-          ansible-galaxy collection install ansible.posix community.general
-          mkdir -p ~/.ansible/roles
-          ln -sfn "$PWD" ~/.ansible/roles/deekayen.aws_efs
-
-      - name: Syntax check the role.
-        run: ansible-playbook --syntax-check tests/test.yml -i tests/inventory
+      - name: Run Molecule tests.
+        run: molecule test
+        env:
+          PY_COLORS: '1'
+          ANSIBLE_FORCE_COLOR: '1'
+          MOLECULE_DISTRO: ${{ matrix.distro }}

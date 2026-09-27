@@ -9,6 +9,17 @@ argument_specs:
     author:
       - David Norman
     options:
+      aws_efs_mount_state:
+        type: str
+        default: mounted
+        choices:
+          - mounted
+          - present
+        description: >-
+          mounted mounts each filesystem and records it in /etc/fstab.
+          present only writes the /etc/fstab entry, for machine images that
+          should mount at first boot.
+
       aws_efs_paths:
         type: list
         elements: dict

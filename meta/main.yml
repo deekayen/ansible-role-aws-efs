@@ -12,13 +12,9 @@ galaxy_info:
   min_ansible_version: "2.15"
 
   platforms:
-    - name: Amazon
+    - name: Amazon Linux
       versions:
-        - "all"
-    - name: EL
-      versions:
-        - "8"
-        - "9"
+        - "2023"
 
   galaxy_tags:
     - aws
@@ -27,6 +23,4 @@ galaxy_info:
     - filesystem
     - mount
 
-dependencies:
-  - role: deekayen.repo_ius
-    when: ansible_os_family == "RedHat"
+dependencies: []

@@ -11,23 +11,11 @@
     name:
       - gcc
       - openssl-devel
-      - tcp_wrappers-devel
     state: present
 
-# AWS EFS Utils requires a version of stunnel that
-# supports both OCSP and certificate hostname checking.
-# EL 7 comes with stunnel-4.56; OCSP was added in 4.16.
-# Stunnel 5.15 from 2015 adds the checkHost openssl 1.0.2 support
-# https://www.stunnel.org/sdf_ChangeLog.html
-- name: Install newer Stunnel for RedHat from IUS.
-  ansible.builtin.package:
-    name: stunnel5u
-    state: present
-  when: ansible_os_family == "RedHat"
-
-# This will fail if you don't already point at a repository which
-# contains an amazon-efs-utils RPM in config before this role.
-# It should succeed on Amazon linux.
+# Amazon Linux 2023 ships amazon-efs-utils, which pulls in a stunnel new
+# enough for TLS mounts. Elsewhere, point at a repository that carries the
+# package before running this role.
 - name: Install Amazon EFS Utils.
   ansible.builtin.package:
     name: amazon-efs-utils
@@ -63,5 +51,5 @@
     src: "{{ item.filesystem_id }}:/"
     fstype: efs
     opts: "{{ item.defaults | default('tls') }},_netdev"
-    state: mounted
+    state: "{{ aws_efs_mount_state }}"
   loop: "{{ aws_efs_paths }}"

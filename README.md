@@ -9,13 +9,17 @@ AWS docs: https://docs.aws.amazon.com/efs/latest/ug/using-amazon-efs-utils.html
 Requirements
 ------------
 
-Access to a repository that has the amazon-efs-utils.
+Amazon Linux 2023, which ships `amazon-efs-utils` in its default repository.
+Other distributions need access to a repository that carries the package.
 
 Role Variables
 --------------
 
-`aws_efs_paths` is the only variable, which comes with assumed defaults if
-not overridden by the variable. The `filesystem_id` is the only required item.
+`aws_efs_mount_state` defaults to `mounted`. Set it to `present` to write
+the `/etc/fstab` entries without mounting, for example when baking an AMI.
+
+`aws_efs_paths` comes with assumed defaults if not overridden by the
+variable. The `filesystem_id` is the only required item.
 The alternative `defaults` option is "default" to omit encryption over stunnel.
 
 Mount defaults are as follows:
@@ -30,7 +34,7 @@ Mount defaults are as follows:
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+None.
 
 Example Playbook
 ----------------
